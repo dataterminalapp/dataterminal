@@ -11,7 +11,7 @@ It is a minimal, fast, and productive tool to interact with Postgres databases. 
 - **Local-first & encrypted**: All connection data is encrypted and stored locally
 - **Connections**: Create and manage multiple connections
 - **Clutter-free UI**: Minimal design that keeps the focus on your query
-- **Shortcuts**: Navigate almost all around using just the keyboard
+- **Keyboard controls**: Get around almost the whole app without touching your mouse
 
 ## Limitations
 
