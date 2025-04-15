@@ -4,7 +4,7 @@ It is a minimal, fast, and productive tool to interact with Postgres databases. 
 
 [Download for macOS](https://dataterminal-binaries.s3.us-east-2.amazonaws.com/data-terminal/darwin/arm64/Data+Terminal-1.0.2-arm64.dmg)
 
-<img width="1453" alt="Screenshot 2025-04-15 at 12 27 11 PM" src="https://github.com/user-attachments/assets/6fcfe397-d2e0-4094-ab20-cc04e8d598ad" />
+<img width="1453" alt="main_screenshot" src="https://github.com/user-attachments/assets/e8f9cae2-39a4-41f1-86d8-bdd9c10e8ddd" />
 
 ## Features
 
