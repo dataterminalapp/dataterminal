@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "target": "ES6",
+    "allowJs": true,
+    "strictNullChecks": true,
+    "strict": true,
+    "module": "commonjs",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["node_modules/*"],
+      "@/*": ["src/*"]
+    },
+    "types": [
+      "node",
+      "@wdio/types",
+      "@wdio/mocha-framework",
+      "@wdio/globals/types",
+      "jest",
+      "expect-webdriverio"
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "src/components/**/*",
+    "src/utils/**/*",
+    "src/contexts/**/*",
+    "src/hooks/**/*",
+    "test/client.spec.ts"
+  ]
+}
