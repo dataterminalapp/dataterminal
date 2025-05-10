@@ -1,8 +1,9 @@
 {
   "name": "data-terminal",
   "productName": "Data Terminal",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Data Terminal Application",
+  "repository": "https://github.com/dataterminalapp/dataterminal",
   "main": ".webpack/main",
   "scripts": {
     "start": "NODE_ENV=development ENV=development FORGE_COMMAND=start electron-forge start",

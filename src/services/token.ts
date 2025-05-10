@@ -115,8 +115,6 @@ export const refreshAuthData = async (
         response.status,
         await response.text()
       );
-      log.error("Token: ", accessToken);
-      log.error("Refresh: ", refreshToken);
     }
   } catch (err) {
     log.error("Error refreshing auth data: ", err);

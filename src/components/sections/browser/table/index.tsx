@@ -5,6 +5,7 @@ import DatabaseErrorAnimation from "@/components/sections/explorer/errorAnimatio
 import BrowserTable from "./table";
 import Header from "./header";
 import { useTabContext } from "@/contexts/tab";
+import { BrowserProvider } from "@/contexts/browser";
 
 const TableBrowser = () => {
   const { id: tabId } = useTabContext();
@@ -31,7 +32,7 @@ const TableBrowser = () => {
     typeof connectionIds.find((x) => x === connection?.id) === "undefined";
 
   return (
-    <>
+    <BrowserProvider>
       <Header resultId={resultId} isConnectionDeleted={isConnectionDeleted} />
       {error && (
         <DatabaseErrorAnimation
@@ -40,7 +41,7 @@ const TableBrowser = () => {
         />
       )}
       <BrowserTable />
-    </>
+    </BrowserProvider>
   );
 };
 

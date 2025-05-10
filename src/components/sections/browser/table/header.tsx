@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useTabContext } from "@/contexts/tab";
 import Dialog from "./dialog";
 import { EyeIcon } from "lucide-react";
+import { useBrowserContext } from "@/contexts/browser";
 
 const CONNECTION_MISMATCH_MESSAGE =
   "The current connection does not match the table connection";
@@ -23,6 +24,7 @@ const Header = ({
    * Tabs and connection
    */
   const { id: tabId } = useTabContext();
+  const { gridSelection } = useBrowserContext();
 
   /**
    * States
@@ -36,9 +38,6 @@ const Header = ({
   const rows = useAppSelector(
     (state) => state.results.entities[resultId]?.data?.rows
   );
-  const rowSelectionLength = useAppSelector(
-    (state) => state.results.entities[resultId]?.uiState.rowSelectionLength
-  );
   const currentConnectionId = useAppSelector(
     (state) => state.workspace.connection.current
   );
@@ -49,6 +48,7 @@ const Header = ({
   const entity = tab.options.browser?.entity;
   const connection = tab.options.browser?.connection;
   const isConnectionUnselected = currentConnectionId !== connection?.id;
+  const rowSelectionLength = gridSelection?.rows.length;
   const allRowsSelected = rowSelectionLength === rows?.length;
 
   return (

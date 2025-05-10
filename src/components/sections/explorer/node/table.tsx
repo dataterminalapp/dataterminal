@@ -122,7 +122,9 @@ const Table = ({
   const schemas = useAppSelector((state) => state.workspace.schema.list);
   const schemaId = useAppSelector((state) => state.workspace.schema.current);
   const schemaName = schemas.find((x) => x.id === schemaId)?.name;
-  const entity = useAppSelector((state) => state.schema.entities[node.id]);
+  const entity: SchemaTable | SchemaView = useAppSelector(
+    (state) => state.schema.entities[node.id] as SchemaTable | SchemaView
+  );
   const [onRename, setOnRename] = useState(false);
   const [editingName, setEditingName] = useState(name);
   const lastReqRef = useRef(nanoid());
@@ -202,24 +204,12 @@ const Table = ({
     );
 
   const handleOnBrowser = useCallback(
-    () =>
-      connection &&
-      handleOnBrowserShortcut(
-        dispatch,
-        connection,
-        entity as unknown as SchemaTable | SchemaView
-      ),
+    () => connection && handleOnBrowserShortcut(dispatch, connection, entity),
     [dispatch, connectionId, entity]
   );
 
   const handleOnAudit = useCallback(
-    () =>
-      connection &&
-      handleOnAuditShortcut(
-        dispatch,
-        connection,
-        entity as unknown as SchemaTable | SchemaView
-      ),
+    () => connection && handleOnAuditShortcut(dispatch, connection, entity),
     [dispatch, connectionId, entity]
   );
 
@@ -231,6 +221,7 @@ const Table = ({
             id: node.id,
             name: name,
             type: node.type,
+            schema: entity?.schema,
             parentId:
               node.type === BaseEntityType.Table
                 ? TABLES_NODE_ID
@@ -241,7 +232,7 @@ const Table = ({
     } else {
       console.warn("No entity type detected in tree node to delete.");
     }
-  }, [dispatch, node.id, node.type]);
+  }, [dispatch, node.id, node.type, entity?.schema]);
 
   const handleOnCopy = useCallback(() => {
     copy(node.name);

@@ -405,7 +405,14 @@ export const selectEntity = (
   const sliceName = getEntityNameByEntityType(type);
   if (!sliceName) return null;
 
-  return state.schema[sliceName as keyof NormalizedState].entities[id];
+  if (sliceName === "relationship" || sliceName === "entities") {
+    throw new Error("Invalid slice name.");
+  }
+  return (
+    state.schema[sliceName as keyof NormalizedState] as {
+      entities: Record<string, unknown>;
+    }
+  ).entities[id];
 };
 
 export const {

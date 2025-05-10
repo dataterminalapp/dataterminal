@@ -42,7 +42,6 @@ import {
   resultEditedDataChanged,
   resultRegionVisibleChanged,
   resultSortChanged,
-  rowSelectionUpdated,
   searchFilterEnabled,
 } from "@/features/result";
 import {
@@ -72,6 +71,7 @@ interface TableProps {
     | "both"
     | "none"
     | undefined;
+  onGridSelectionChange?: (gridSelection: GridSelection) => void;
 }
 
 export const DEFAULT_ROWS_PER_PAGE = 10;
@@ -87,6 +87,7 @@ export function Table({
   fullHeight,
   editable,
   limited,
+  onGridSelectionChange: propsOnGridSelectionChange,
 }: TableProps) {
   /**
    * Hooks
@@ -186,7 +187,7 @@ export function Table({
    */
   useEffect(() => {
     if (isFocused && tableEditorRef.current && containerRef.current) {
-      updateFocusedTable(tableEditorRef.current, containerRef.current, 0);
+      updateFocusedTable(tableEditorRef.current, containerRef.current);
     }
   }, [isFocused, resultId]);
 
@@ -326,16 +327,12 @@ export function Table({
 
   const onGridSelectionChange = useCallback(
     (newSelection: GridSelection) => {
-      dispatch(
-        rowSelectionUpdated({
-          id: resultId,
-          rowSelection: newSelection.rows.toArray(),
-          rowSelectionLength: newSelection.rows.length,
-        })
-      );
       setGridSelection(newSelection);
+      if (propsOnGridSelectionChange) {
+        propsOnGridSelectionChange(newSelection);
+      }
     },
-    [resultId]
+    [resultId, propsOnGridSelectionChange]
   );
 
   const onCheckedChange = useCallback(

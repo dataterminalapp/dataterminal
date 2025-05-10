@@ -465,6 +465,7 @@ const Column = ({ className, isFocused, matches, node }: Props) => {
             type: BaseEntityType.Column,
             parentId,
             table: node.table,
+            schema: node.schema,
           },
         })
       );

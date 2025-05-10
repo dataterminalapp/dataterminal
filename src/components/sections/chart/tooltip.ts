@@ -113,7 +113,6 @@ export const externalTooltipHandler = (context: {
   tooltipEl.style.opacity = "1";
   tooltipEl.style.left = positionX + tooltip.caretX + "px";
   tooltipEl.style.top = positionY + tooltip.caretY + "px";
-  tooltipEl.style.font = tooltip.options.bodyFont.string;
   tooltipEl.style.padding =
     tooltip.options.padding + "px " + tooltip.options.padding + "px";
 

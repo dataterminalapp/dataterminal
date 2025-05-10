@@ -11,6 +11,7 @@ import useQuery from "@/hooks/useQuery";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { APIError } from "../../../../services/error";
 import { useCallback, useMemo } from "react";
+import { useBrowserContext } from "@/contexts/browser";
 
 interface PrimaryKey {
   attnum: number;
@@ -85,6 +86,7 @@ const Dialog = ({
    */
   const { toast } = useToast();
   const dispatch = useAppDispatch();
+  const { gridSelection } = useBrowserContext();
   const { backQuery } = useQuery({});
 
   /**
@@ -92,12 +94,6 @@ const Dialog = ({
    */
   const rows = useAppSelector(
     (state) => state.results.entities[resultId]?.data?.rows
-  );
-  const rowSelection = useAppSelector(
-    (state) => state.results.entities[resultId]?.uiState.rowSelection
-  );
-  const rowSelectionLength = useAppSelector(
-    (state) => state.results.entities[resultId]?.uiState.rowSelectionLength
   );
 
   /**
@@ -127,9 +123,9 @@ const Dialog = ({
       rows,
       primaryKeys,
       allRowsSelected,
-      rowSelection
+      gridSelection?.rows.toArray()
     );
-  }, [entity, rows, primaryKeys, allRowsSelected, rowSelection]);
+  }, [entity, rows, primaryKeys, allRowsSelected, gridSelection]);
 
   /**
    * Callbacks
@@ -162,8 +158,8 @@ const Dialog = ({
             handleBackup();
             console.error("Error deleting everything from the entity: ", err);
           }
-        } else if (rowSelection) {
-          const selectedRowsIndexes = rowSelection;
+        } else if (gridSelection) {
+          const selectedRowsIndexes = gridSelection.rows.toArray();
           try {
             dispatch(
               resultDataRowsDeleted({
@@ -188,7 +184,7 @@ const Dialog = ({
         description: APIError.normalizeError(err, "Unknown issue").message,
       });
     }
-  }, [allRowsSelected, primaryKeys, resultId, rowSelection, rows]);
+  }, [allRowsSelected, primaryKeys, resultId, gridSelection, rows]);
 
   return (
     <DeleteDialog
@@ -201,7 +197,7 @@ const Dialog = ({
             `Are you sure you want to clear this ${
               entity?.type === BaseEntityType.Table ? "table" : "view"
             }?`) ||
-          (rowSelectionLength && rowSelectionLength <= 1
+          (gridSelection && gridSelection.rows.length <= 1
             ? "Are you sure you want to remove this row?"
             : "Are you sure you want to remove these rows?"),
       }}
