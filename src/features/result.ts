@@ -36,9 +36,6 @@ interface UIState {
   estimatedHeight: number;
   pageIndex: number;
   allRowSelected?: boolean;
-  rowSelection?: number[] | undefined;
-  rowSelectionLength?: number | undefined;
-  selectedCells: Record<string, string>;
 
   planTypeSelected?: string;
   planTypeSubIndexSelected?: number;
@@ -279,7 +276,6 @@ export const resultsSlice = createSlice({
               pageIndex: 0,
               planFadeEnabled: true,
               searchFilterEnabled: false,
-              selectedCells: {},
               regionVisible: 0,
               columns: result.data?.fields.map((x, index) => {
                 const column: AutoGridColumn = {
@@ -379,18 +375,6 @@ export const resultsSlice = createSlice({
     planFadeEnabled: (state, action: PayloadAction<{ id: string }>) => {
       state.entities[action.payload.id].uiState.planFadeEnabled = true;
     },
-    rowSelectionUpdated: (
-      state,
-      action: PayloadAction<{
-        id: string;
-        rowSelection: number[] | undefined;
-        rowSelectionLength: number | undefined;
-      }>
-    ) => {
-      const entity = getEntityById(state, action);
-      entity.uiState.rowSelection = action.payload.rowSelection;
-      entity.uiState.rowSelectionLength = action.payload.rowSelectionLength;
-    },
     planTypeSelectedUpdated: (
       state,
       action: PayloadAction<{
@@ -456,6 +440,7 @@ export const resultsSlice = createSlice({
             deletionCount += 1;
           }
         });
+        data.rows = [...rows];
       }
     },
     resultAllDataRowsDeleted: (
@@ -672,7 +657,6 @@ export const {
   paginationDecreased,
   fadeDisabled,
   searchFilterUpdated,
-  rowSelectionUpdated,
   planTypeSelectedUpdated,
   planTypeSubIndexUpdated,
   planFadeDisabled,

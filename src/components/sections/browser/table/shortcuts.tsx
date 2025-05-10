@@ -1,7 +1,8 @@
 import DetectBoardKey from "@/components/utils/shortcuts/detectBoardKey";
+import { useBrowserContext } from "@/contexts/browser";
 import { useFocusContext } from "@/contexts/focus";
 import { searchFilterEnabled } from "@/features/result";
-import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { useAppDispatch } from "@/hooks/useRedux";
 
 const Shortcuts = ({
   resultId,
@@ -13,10 +14,7 @@ const Shortcuts = ({
   const dispatch = useAppDispatch();
   const { setFocus, nextTablePage, previousTablePage, getCurrentFocus } =
     useFocusContext();
-  const rowSelection = useAppSelector(
-    (state) => state.results.entities[resultId]?.uiState.rowSelection
-  );
-  const rowsSelected = rowSelection ? Object.keys(rowSelection).length : 0;
+  const { gridSelection } = useBrowserContext();
 
   return (
     <>
@@ -46,7 +44,7 @@ const Shortcuts = ({
         meta
         onKeyPress={() =>
           getCurrentFocus()?.target !== "search" &&
-          rowsSelected > 0 &&
+          (gridSelection?.rows.length || 0) > 0 &&
           onOpenDeleteDialogChanged(true)
         }
       />

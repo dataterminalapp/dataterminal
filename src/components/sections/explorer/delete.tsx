@@ -19,6 +19,7 @@ import { format } from "../../utils/formatter";
 function dropEntitySql(
   entityType: BaseEntityType,
   entityName: string,
+  schema: string,
   tableName?: string
 ) {
   switch (entityType) {
@@ -27,24 +28,29 @@ function dropEntitySql(
     case BaseEntityType.Database:
       return format(`DROP DATABASE IF EXISTS %I;`, entityName);
     case BaseEntityType.Table:
-      return format(`DROP TABLE IF EXISTS %I;`, entityName);
+      return format(`DROP TABLE IF EXISTS %I.%I;`, schema, entityName);
     case BaseEntityType.View:
-      return format(`DROP VIEW IF EXISTS %I;`, entityName);
+      return format(`DROP VIEW IF EXISTS %I.%I;`, schema, entityName);
     case BaseEntityType.Index:
-      return format(`DROP INDEX IF EXISTS %I;`, entityName);
+      return format(`DROP INDEX IF EXISTS %I.%I;`, schema, entityName);
     case BaseEntityType.MaterializedView:
-      return format(`DROP MATERIALIZED VIEW IF EXISTS %I;`, entityName);
+      return format(
+        `DROP MATERIALIZED VIEW IF EXISTS %I.%I;`,
+        schema,
+        entityName
+      );
     case BaseEntityType.UserFunction:
     case BaseEntityType.Function:
-      return `DROP FUNCTION IF EXISTS ${entityName}();`;
+      return `DROP FUNCTION IF EXISTS ${schema}.${entityName}();`;
     case BaseEntityType.Procedure:
-      return `DROP PROCEDURE IF EXISTS ${entityName}();`;
+      return `DROP PROCEDURE IF EXISTS ${schema}.${entityName}();`;
     case BaseEntityType.Column:
       if (!tableName) {
         return;
       }
       return format(
-        `ALTER TABLE %I DROP COLUMN IF EXISTS %I;`,
+        `ALTER TABLE %I.%I DROP COLUMN IF EXISTS %I;`,
+        schema,
         tableName,
         entityName
       );
@@ -65,6 +71,7 @@ const DeleteTreeNodeDialog = () => {
       const dropSql = dropEntitySql(
         entityToDelete.type,
         entityToDelete.name,
+        entityToDelete.schema,
         entityToDelete.table
       );
       return dropSql;
@@ -80,7 +87,12 @@ const DeleteTreeNodeDialog = () => {
   const handleOnDeleteConfirm = useCallback(
     async (entity: SimplifiedSchemaEntity) => {
       try {
-        const dropSql = dropEntitySql(entity.type, entity.name, entity.table);
+        const dropSql = dropEntitySql(
+          entity.type,
+          entity.name,
+          entity.schema,
+          entity.table
+        );
         dispatch(
           entityLogicallyRemoved({
             id: entity.id,

@@ -81,9 +81,11 @@ const DeleteDialog = (props: Props) => {
           <AlertDialogDescription className="text-wrap truncate">
             {props.options.description}
           </AlertDialogDescription>
-          <p className="text-wrap text-muted-foreground truncate bg-zinc-800 text-sm px-2 py-1 rounded-md">
-            {props.options.object}
-          </p>
+          {props.options.object && (
+            <p className="text-wrap text-muted-foreground truncate bg-zinc-800 text-sm px-2 py-1 rounded-md">
+              {props.options.object}
+            </p>
+          )}
 
           {props.code && displayCode && <CodeDisplay code={props.code} />}
         </AlertDialogHeader>

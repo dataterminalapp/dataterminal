@@ -3,6 +3,7 @@ import { BaseEntity } from "./schema";
 import { MIN_SIZE_PIXELS } from "../components/sections/explorer";
 
 export type SimplifiedSchemaEntity = {
+  schema: string;
   table?: string;
   parentId: string;
 } & Pick<BaseEntity, "id" | "name" | "type">;

@@ -9,6 +9,7 @@ import { format } from "@/components/utils/formatter";
 import { useToast } from "@/hooks/useToast";
 import Loading from "@/components/utils/loading";
 import { BaseEntityType } from "@/features/schema";
+import { useBrowserContext } from "@/contexts/browser";
 
 const BrowserTable = () => {
   /**
@@ -16,6 +17,7 @@ const BrowserTable = () => {
    */
   const { id: tabId } = useTabContext();
   const { id: panelId } = usePanelContext();
+  const { onGridSelectionChange } = useBrowserContext();
   const { backQuery } = useQuery({ panelId });
   const { toast } = useToast();
 
@@ -90,6 +92,7 @@ const BrowserTable = () => {
    */
   const loadEntity = useCallback(async () => {
     if (
+      !resultId &&
       entity &&
       (entity.type === BaseEntityType.Table ||
         entity.type === BaseEntityType.View)
@@ -113,7 +116,7 @@ const BrowserTable = () => {
         console.error("Error: ", err);
       }
     }
-  }, [entity, backQuery, toast]);
+  }, [resultId, entity, backQuery, toast]);
 
   /**
    * Effects
@@ -172,6 +175,7 @@ const BrowserTable = () => {
                   : "number"
               }
               editable={false}
+              onGridSelectionChange={onGridSelectionChange}
             />
           }
         </ResultProvider>
