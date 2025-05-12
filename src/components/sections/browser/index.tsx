@@ -105,7 +105,7 @@ const Browser = () => {
       {/* Try to always match explorer padding. */}
       <div
         className={cn(
-          "container relative h-full max-h-full flex flex-col gap-3 p-2 px-4 md:px-24",
+          "relative h-full max-h-full flex flex-col gap-3 p-2 px-4 md:px-20 md:ml-1.5",
           isTableOrView && "overflow-hidden"
         )}
       >

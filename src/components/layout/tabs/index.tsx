@@ -274,25 +274,24 @@ export const TabTriggerContent = ({ focus, num, tabId }: Props) => {
       <div
         ref={containerRef}
         onMouseDown={onMouseDown}
-        className="relative py-2 flex items-center justify-center w-full h-full"
+        className="relative py-2 flex items-center justify-center grow basis-auto"
       >
         <div className="flex flex-row gap-1 ml-8 w-fit truncate">
           <IconByTabType
             tabType={tab.type}
             entityType={entityType}
-            className="size-3.5 shrink-0 mt-0.5"
+            className="size-3.5 mt-0.5"
           />
-          {/* This used to be an input. */}
           <p
             className={cn(
-              "bg-transparent focus:outline-none truncate mr-4 shrink-0 font-normal"
+              "bg-transparent focus:outline-none truncate mr-4 font-normal"
             )}
             style={{ width: `${widthInCharts}ch` }}
           >
             {value}
           </p>
           {showShortcut && (
-            <kbd className="absolute right-4 font-sans text-xs text-muted-foreground/50 hidden group-hover:block">
+            <kbd className="absolute right-4 text-xs text-muted-foreground/50 hidden group-hover:block">
               ⌘ {tabIndex}
             </kbd>
           )}
@@ -350,7 +349,7 @@ export const TabsHeader = (): JSX.Element => {
     return (
       <TabsList
         tabIndex={-1}
-        className="bg-card p-0 h-fit w-full flex-initial top-0 z-20 tab overflow-auto flex-shrink-0 sticky rounded-none"
+        className="bg-card p-0 h-fit w-full top-0 z-20 sticky rounded-none"
       >
         {tabs.map((id, i) => (
           <TabsTrigger

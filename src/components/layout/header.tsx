@@ -6,7 +6,10 @@ import { tabAdded } from "@/features/tabs";
 import { layoutToggled, panelAdded } from "@/features/panel";
 import { useFocusContext } from "@/contexts/focus";
 import SmallTooltip from "../utils/SmallTooltip";
-import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
+import {
+  MagnifyingGlassIcon,
+  MixerHorizontalIcon,
+} from "@radix-ui/react-icons";
 import BoardKey from "../utils/shortcuts/boardKey";
 import { SearchDialog } from "./searchDialog";
 import {
@@ -112,6 +115,11 @@ const Header = ({ className }: { className: string }) => {
     [dispatch, connection, schemas, searchPath]
   );
 
+  const onPreferencesSelect = useCallback(() => {
+    const tabAddedResults = dispatch(tabAdded("Preferences"));
+    dispatch(focusChanged({ tabId: tabAddedResults.payload.id }));
+  }, []);
+
   return (
     <div className={cn(className, "draggable top-0 w-full grid grid-cols-3")}>
       <div className="draggable"></div>
@@ -192,6 +200,18 @@ const Header = ({ className }: { className: string }) => {
             className={cn(
               "size-4 stroke-muted-foreground group-hover:stroke-primary"
             )}
+          />
+        </SmallTooltip>
+        <SmallTooltip
+          disableHoverableContent
+          description={"Open preferences"}
+          onClick={onPreferencesSelect}
+          className="p-0.5 hover:bg-accent rounded group"
+        >
+          <MixerHorizontalIcon
+            className={
+              "size-4 stroke-0 stroke-muted-foreground group-hover:stroke-primary"
+            }
           />
         </SmallTooltip>
       </div>

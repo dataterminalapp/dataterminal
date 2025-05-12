@@ -159,6 +159,7 @@ export function Table({
       accentColor: "#16a34a",
       headerFontStyle: "12px",
       baseFontStyle: "12px",
+      fontFamily: "'IBM Plex Mono'",
       textHeader: "#959595",
       headerBottomBorderColor: "#27272A",
       bgBubbleSelected: "#959595",
@@ -410,7 +411,7 @@ export function Table({
             rows={data.length}
             rowHeight={dense ? columnHeight : undefined}
             headerHeight={dense ? columnHeight : undefined}
-            minColumnWidth={100}
+            minColumnWidth={200}
             trapFocus
             smoothScrollX={true}
             smoothScrollY={true}
