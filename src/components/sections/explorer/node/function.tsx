@@ -160,7 +160,7 @@ const Function = ({
           }}
         >
           <p
-            className={cn("w-32 flex-shrink-0 font-sans", onRename && "hidden")}
+            className={cn("w-32 flex-shrink-0", onRename && "hidden")}
             onDoubleClick={handleOnRenameDoubleClick}
           >
             <HighlightedText text={node.name} matches={matches} />

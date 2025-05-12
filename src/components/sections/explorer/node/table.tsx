@@ -282,12 +282,7 @@ const Table = ({
               isFocused && "stroke-primary"
             )}
           />
-          <p
-            className={cn(
-              "w-32 flex-shrink-0 font-sans text-xs",
-              onRename && "hidden"
-            )}
-          >
+          <p className={cn("w-32 flex-shrink-0 text-xs", onRename && "hidden")}>
             <HighlightedText text={name} matches={matches} />
           </p>
 

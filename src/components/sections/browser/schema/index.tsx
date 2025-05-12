@@ -3,14 +3,12 @@ import { useTabContext } from "@/contexts/tab";
 import { BaseEntityType, SchemaTable, SchemaView } from "@/features/schema";
 import { useCallback } from "react";
 import { tabBrowserOptionsChanges } from "@/features/tabs";
-import { Eye, Table } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const SchemaGrid = ({
   className,
   title,
   items,
-  icon,
   onClick,
 }: {
   className?: string;
@@ -33,22 +31,8 @@ const SchemaGrid = ({
           className="bg-zinc-800/50 hover:bg-zinc-700/50 transition-colors duration-200 p-4 rounded-lg cursor-pointer"
           onClick={() => onClick(item)}
         >
-          <div className="mb-2">
-            <div className="relative overflow-hidden bg-zinc-700/75 w-full aspect-square rounded-md flex items-center justify-center">
-              <div className="text-xl font-extrabold">
-                {item.name.substring(0, 3).toUpperCase()}
-              </div>
-              <div className="absolute opacity-5">
-                {icon === "table" ? (
-                  <Table className="size-64 stroke-1 opacity-50" />
-                ) : (
-                  <Eye className="size-64 stroke-1 opacity-50" />
-                )}
-              </div>
-            </div>
-          </div>
-          <h3 className="text-sm font-medium truncate">{item.name}</h3>
-          <p className="text-xs text-muted-foreground truncate">
+          <h3 className="text-xl font-medium truncate">{item.name}</h3>
+          <p className="text-muted-foreground truncate">
             {item.children?.length || 0}{" "}
             {item.children?.length === 1 ? "column" : "columns"}
           </p>
